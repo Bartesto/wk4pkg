@@ -1,0 +1,95 @@
+---
+title: "Using wk4pkg"
+author: "Bart Huntley"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using wk4pkg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+The Fatality Analysis Reporting System (FARS) collates accident data and is available from the [National Highway Traffic Safety Administration](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars). The functions contained in the wk4pkg are designed to help access and summarise this data.
+
+What follows is a guide on how to use each of the functions.
+
+###make_filename
+Downloading data from FARS will result in annual compressed .csv files. The function **make_filename** constructs the correctly formatted .csv filename, enabling the resulting object to be passed directly to other wk4pkg functions. For example:
+```{r, eval=TRUE, message=FALSE}
+# Load the package and other helpful packages
+library(wk4pkg)
+library(dplyr)
+
+# Make a file name for the year 2013 and store in an object called 'fname'
+fname <- make_filename(2013)
+
+print(fname)
+```
+
+
+###fars_read
+Now that we have a filename it is easy to read in some data.
+```{r, eval=TRUE, echo=FALSE}
+fname <- system.file("extdata", fname, package = "wk4pkg")
+```
+
+```{r, eval=TRUE}
+# Here we will read in the data and create an object called 'FARS2013'
+FARS2013 <- fars_read(fname)
+
+# Use dplyr's glimpse function to see the data
+glimpse(FARS2013)
+```
+
+###fars_read_years
+This function will take a vector of years and return a list containing tibbles of years and months in which fatal traffic accidents occured.
+```{r, eval=TRUE}
+# Make a vector of years for which you have downloaded data
+years <- c(2013, 2014, 2015)
+
+# Use the function to create a list called 'allyears'
+allyears <- fars_read_years(years)
+
+# Use dplyr's glimpse function to see the data
+glimpse(allyears)
+
+```
+
+
+###fars_summarize_years
+This function again takes a vector of years but returns a summary of the number of fatal accidents per month per year in a tibble.
+```{r, eval=TRUE}
+# Make a vector of years for which you have downloaded data
+years <- c(2013, 2014, 2015)
+
+# Use the function to create a tibble summarising fatalities per month
+summary <- fars_summarize_years(years)
+
+# Use dplyr's glimpse function to see the data
+glimpse(summary)
+```
+
+###fars_map_state
+The final function in this package creates a black and white state map showing the locations of fatal accidents by providing a State number and year.
+```{r, eval=TRUE, warning=FALSE}
+# This function uses functions from the 'maps' package
+library(maps)
+
+# To make the map provide a State number and year of interest (e.g. for fatalities in California in 2013)
+fars_map_state(6, 2013)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

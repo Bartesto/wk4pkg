@@ -1,0 +1,20 @@
+Package: wk4pkg
+Type: Package
+Title: Functions to query FARS data
+Description: Various functions to assist with querying Fatality Analysis 
+    Reporting System data (FARS). Functions help create file names, read in 
+    data by year, create monthly summaries and simple maps by state of accident
+    locations.
+Version: 0.1.0
+Depends: R (>= 3.0.0)
+Imports: dplyr, readr, maps
+Author: Bart Huntley <bart.huntley@dpaw.wa.gov.au>
+Maintainer: Bart Huntley <bart.huntley@dpaw.wa.gov.au>
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
