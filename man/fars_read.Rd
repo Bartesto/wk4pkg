@@ -26,8 +26,9 @@ the Fatality Analysis Reporting System (FARS).
 \note{
 Conditions that may result in an error include:
 \itemize{
-  \item \code{fars_read} uses functions from the packages \code{\link{dplyr}} 
-    and \code{\link{readr}} and they therefore must be installed prior to use. 
+  \item \code{fars_read} uses functions from the packages 
+    \code{\link[dplyr]{tbl_df}},and  \code{\link[readr]{read_csv}} and they 
+    therefore must be installed prior to use. 
   \item \code{fars_read} also expects the character string of the FARS data 
     file name to be the full file name (i.e. include the file extension).
     }

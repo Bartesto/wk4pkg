@@ -8,8 +8,9 @@
 #' 
 #' @note Conditions that may result in an error include:
 #' \itemize{
-#'   \item \code{fars_read} uses functions from the packages \code{\link{dplyr}} 
-#'     and \code{\link{readr}} and they therefore must be installed prior to use. 
+#'   \item \code{fars_read} uses functions from the packages 
+#'     \code{\link[dplyr]{tbl_df}},and  \code{\link[readr]{read_csv}} and they 
+#'     therefore must be installed prior to use. 
 #'   \item \code{fars_read} also expects the character string of the FARS data 
 #'     file name to be the full file name (i.e. include the file extension).
 #'     } 
@@ -85,12 +86,10 @@ make_filename <- function(year) {
 #' @note Conditions that may result in an error include:
 #' \itemize{
 #'   \item This function uses \code{\link{make_filename}} and as such it must be 
-#'     loaded into the NAMESPACE.
+#'     loaded into the NAMESPACE. 
 #'   \item This function and others that it rely on, \code{\link{make_filename}},
-#'     require the packages \code{\link{dplyr}} and \code{\link{readr}} to be 
-#'     installed.
-#'   \item This function also requires that the package \code{\link{dpyr}} is 
-#'     loaded into the NAMESPACE.
+#'     require the packages \code{\link[dplyr]{tbl_df}} and 
+#'     \code{\link[readr]{read_csv}} to be installed.
 #'   \item This function must be run from the same location as the downloaded
 #'     FARS data files.
 #'   \item Providing a vector of years where there is no corresponding FARS data
@@ -98,6 +97,7 @@ make_filename <- function(year) {
 #'     return a list however, and it will contain results for years that do have 
 #'     a corresponding FARS data file.
 #'   }
+#'   
 #'   
 #' @param years A character or numeric vector representing the years of the FARS 
 #' data files required for further processing.
@@ -113,6 +113,7 @@ make_filename <- function(year) {
 #' 
 #' @import dplyr
 #' @import readr
+#' @importFrom stats setNames
 #'  
 #' @examples 
 #'  \dontrun{
@@ -126,7 +127,7 @@ fars_read_years <- function(years) {
     file <- make_filename(year)
     tryCatch({
       dat <- fars_read(file)
-      dplyr::mutate_(data, .dots = setNames(list(~year), "year")) %>% 
+      dplyr::mutate_(dat, .dots = setNames(list(~year), "year")) %>% 
         dplyr::select_("MONTH", "year")
     }, error = function(e) {
       warning("invalid year: ", year)
@@ -152,10 +153,8 @@ fars_read_years <- function(years) {
 #'     \code{link{fars_read_years}}. As such they must be loaded into the 
 #'     NAMESPACE.
 #'   \item This function and others that it rely on, \code{\link{make_filename}}
-#'     and \code{link{fars_read_years}}, require the packages \code{\link{dplyr}}, 
-#'     \code{\link{readr}} and \code{\link{tidyr}} to be installed.
-#'   \item This function also requires that the package \code{\link{dpyr}} is 
-#'     loaded into the NAMESPACE.
+#'     and \code{link{fars_read_years}}, require the packages \code{\link[dplyr]{summarise}}, 
+#'     \code{\link[readr]{read_csv}} and \code{\link[tidyr]{spread}} to be installed.
 #'   \item This function must be run from the same location as the downloaded
 #'     FARS data files.
 #'   \item Providing a vector of years where there is no corresponding FARS data
@@ -189,9 +188,16 @@ fars_summarize_years <- function(years) {
   dat_list <- fars_read_years(years)
   dplyr::bind_rows(dat_list) %>% 
     dplyr::group_by_(~MONTH, ~year) %>% 
-    dplyr::summarize_(.dots = dots) %>%
+    dplyr::summarize_(.dots = list(~sum(MONTH))) %>%
     tidyr::spread_("year", "sum(MONTH)")
 }
+# fars_summarize_years <- function(years) {
+#   dat_list <- fars_read_years(years)
+#   dplyr::bind_rows(dat_list) %>% 
+#     dplyr::group_by(year, MONTH) %>% 
+#     dplyr::summarize(n = n()) %>%
+#     tidyr::spread(year, n)
+# }
 
 
 #' Plot a map of accidents from FARS data
@@ -206,8 +212,8 @@ fars_summarize_years <- function(years) {
 #' \itemize{
 #'   \item This function uses \code{\link{make_filename}} and 
 #'     \code{\link{fars_read}} and these must be loaded into the NAMESPACE.
-#'   \item This function also requires the packages \code{\link{dplyr}} and 
-#'     \code{\link{maps}} to be installed and loaded into the NAMESPACE.
+#'   \item This function also requires the packages \code{\link[dplyr]{filter}} and 
+#'     \code{\link[maps]{map}} to be installed and loaded into the NAMESPACE.
 #'   \item Providing an incorrect US State number.
 #'   \item The year input must be coerceable to class integer.
 #'   \item The provided year must correspond to a downloaded FARS data file.
@@ -241,7 +247,7 @@ fars_map_state <- function(state.num, year) {
   
   if(!(state.num %in% unique(data$STATE)))
     stop("invalid STATE number: ", state.num)
-  data.sub <- dplyr::filter(data, STATE == state.num)
+  data.sub <- dplyr::filter_(data, ~STATE == state.num)
   if(nrow(data.sub) == 0L) {
     message("no accidents to plot")
     return(invisible(NULL))

@@ -31,8 +31,8 @@ Conditions that may result in an error include:
 \itemize{
   \item This function uses \code{\link{make_filename}} and 
     \code{\link{fars_read}} and these must be loaded into the NAMESPACE.
-  \item This function also requires the packages \code{\link{dplyr}} and 
-    \code{\link{maps}} to be installed and loaded into the NAMESPACE.
+  \item This function also requires the packages \code{\link[dplyr]{filter}} and 
+    \code{\link[maps]{map}} to be installed and loaded into the NAMESPACE.
   \item Providing an incorrect US State number.
   \item The year input must be coerceable to class integer.
   \item The provided year must correspond to a downloaded FARS data file.

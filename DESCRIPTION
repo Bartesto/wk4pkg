@@ -7,7 +7,7 @@ Description: Various functions to assist with querying Fatality Analysis
     locations.
 Version: 0.1.0
 Depends: R (>= 3.0.0)
-Imports: dplyr, readr, maps
+Imports: dplyr, readr, maps, tidyr
 Author: Bart Huntley <bart.huntley@dpaw.wa.gov.au>
 Maintainer: Bart Huntley <bart.huntley@dpaw.wa.gov.au>
 License: GPL (>= 2)

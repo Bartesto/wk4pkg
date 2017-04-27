@@ -34,12 +34,10 @@ in each FARS data file.
 Conditions that may result in an error include:
 \itemize{
   \item This function uses \code{\link{make_filename}} and as such it must be 
-    loaded into the NAMESPACE.
+    loaded into the NAMESPACE. 
   \item This function and others that it rely on, \code{\link{make_filename}},
-    require the packages \code{\link{dplyr}} and \code{\link{readr}} to be 
-    installed.
-  \item This function also requires that the package \code{\link{dpyr}} is 
-    loaded into the NAMESPACE.
+    require the packages \code{\link[dplyr]{tbl_df}} and 
+    \code{\link[readr]{read_csv}} to be installed.
   \item This function must be run from the same location as the downloaded
     FARS data files.
   \item Providing a vector of years where there is no corresponding FARS data

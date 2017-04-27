@@ -37,10 +37,8 @@ Conditions that may result in an error include:
     \code{link{fars_read_years}}. As such they must be loaded into the 
     NAMESPACE.
   \item This function and others that it rely on, \code{\link{make_filename}}
-    and \code{link{fars_read_years}}, require the packages \code{\link{dplyr}}, 
-    \code{\link{readr}} and \code{\link{tidyr}} to be installed.
-  \item This function also requires that the package \code{\link{dpyr}} is 
-    loaded into the NAMESPACE.
+    and \code{link{fars_read_years}}, require the packages \code{\link[dplyr]{summarise}}, 
+    \code{\link[readr]{read_csv}} and \code{\link[tidyr]{spread}} to be installed.
   \item This function must be run from the same location as the downloaded
     FARS data files.
   \item Providing a vector of years where there is no corresponding FARS data
