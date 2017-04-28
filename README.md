@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/Bartesto/wk4pkg.svg?branch=master)](https://travis-ci.org/Bartesto/wk4pkg)
+[![Build Status](https://travis-ci.org/Bartesto/wk4pkg.svg?branch=master)](https://travis-ci.org/Bartesto/wk4pkg) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Bartesto/wk4pkg?branch=master&svg=true)](https://ci.appveyor.com/project/Bartesto/wk4pkg)
 
 ### wk4pkg README
 
