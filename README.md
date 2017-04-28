@@ -1,0 +1,23 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Build Status](https://travis-ci.org/Bartesto/wk4pkg.svg?branch=master)](https://travis-ci.org/Bartesto/wk4pkg)
+
+### wk4pkg README
+
+This package contains a collection of functions that will aid in the loading, analysing and visualisation of Fatality Analysis Reporting System [(FARS)](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars) data.
+
+### Requirements
+
+This package must be installed from GitHub. You can use the following code to install it:
+
+``` r
+library(devtools)
+install_github("Bartesto/wk4pkg")
+library(wk4pkg)
+```
+
+The package has dependencies with dplyr, tidyr, readr and maps. On installation you may be prompted to install additional packages.
+
+### Help Files
+
+All functions contained in wk4pkg have their own help files and there is also a package vignette with a suggested workflow.
